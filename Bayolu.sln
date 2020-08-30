@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bayolu.Api", "Bayolu.Api\Bayolu.Api.csproj", "{048B9BE5-3AE6-402F-BDBB-DA51A8B98EF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bayolu.Domain", "Bayolu.Domain\Bayolu.Domain.csproj", "{E732E65F-5A9E-4012-B33C-9CA3FA2C19BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bayolu.AppService", "Bayolu.AppService\Bayolu.AppService.csproj", "{75C94FDC-9F19-4925-8B39-A4B85F8AE49B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bayolu.View", "Bayolu.View\Bayolu.View.csproj", "{4EE0D963-57B0-4CD6-8B69-B3275C54A143}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bayolu.SharedKernel", "Bayolu.SharedKernel\Bayolu.SharedKernel.csproj", "{68427483-846C-4AA5-91D0-2E12DAC07A1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bayolu.ViewModel", "Bayolu.ViewModel\Bayolu.ViewModel.csproj", "{6358A92F-FBE9-427F-9778-6148091E104D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{048B9BE5-3AE6-402F-BDBB-DA51A8B98EF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{048B9BE5-3AE6-402F-BDBB-DA51A8B98EF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{048B9BE5-3AE6-402F-BDBB-DA51A8B98EF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{048B9BE5-3AE6-402F-BDBB-DA51A8B98EF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E732E65F-5A9E-4012-B33C-9CA3FA2C19BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E732E65F-5A9E-4012-B33C-9CA3FA2C19BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E732E65F-5A9E-4012-B33C-9CA3FA2C19BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E732E65F-5A9E-4012-B33C-9CA3FA2C19BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75C94FDC-9F19-4925-8B39-A4B85F8AE49B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75C94FDC-9F19-4925-8B39-A4B85F8AE49B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75C94FDC-9F19-4925-8B39-A4B85F8AE49B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75C94FDC-9F19-4925-8B39-A4B85F8AE49B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EE0D963-57B0-4CD6-8B69-B3275C54A143}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EE0D963-57B0-4CD6-8B69-B3275C54A143}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EE0D963-57B0-4CD6-8B69-B3275C54A143}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EE0D963-57B0-4CD6-8B69-B3275C54A143}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68427483-846C-4AA5-91D0-2E12DAC07A1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68427483-846C-4AA5-91D0-2E12DAC07A1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68427483-846C-4AA5-91D0-2E12DAC07A1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68427483-846C-4AA5-91D0-2E12DAC07A1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6358A92F-FBE9-427F-9778-6148091E104D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6358A92F-FBE9-427F-9778-6148091E104D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6358A92F-FBE9-427F-9778-6148091E104D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6358A92F-FBE9-427F-9778-6148091E104D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6084D620-D1AB-4BFC-A543-BAB1D477A617}
+	EndGlobalSection
+EndGlobal
