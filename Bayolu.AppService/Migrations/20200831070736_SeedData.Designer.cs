@@ -4,14 +4,16 @@ using Bayolu.AppService.Infastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bayolu.AppService.Migrations
 {
     [DbContext(typeof(BayolyDbContext))]
-    partial class BayolyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200831070736_SeedData")]
+    partial class SeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,21 +61,37 @@ namespace Bayolu.AppService.Migrations
                     b.Property<int>("Team")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("UserReviews")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserReviews");
 
                     b.ToTable("User","Bayolu");
                 });
 
-            modelBuilder.Entity("Bayolu.Domain.User", b =>
+            modelBuilder.Entity("Bayolu.Domain.UserReviews", b =>
                 {
-                    b.HasOne("Bayolu.Domain.User", "UserReviewsBy")
-                        .WithMany()
-                        .HasForeignKey("UserReviews");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ReviewByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserReviews");
+                });
+
+            modelBuilder.Entity("Bayolu.Domain.UserReviews", b =>
+                {
+                    b.HasOne("Bayolu.Domain.User", "User")
+                        .WithMany("UserReviews")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

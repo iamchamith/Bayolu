@@ -23,6 +23,7 @@ namespace Bayolu.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSwaggerGen();
+            services.ConfigureCrosServices();
             services.AddDbContext<BayolyDbContext>(option =>
             option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -53,7 +54,7 @@ namespace Bayolu.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.ConfigureCros();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

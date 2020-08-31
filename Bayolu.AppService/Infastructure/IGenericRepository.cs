@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Bayolu.AppService.Infastructure
 {
@@ -9,5 +10,6 @@ namespace Bayolu.AppService.Infastructure
         void Insert(T obj);
         void Update(T obj);
         void Delete(object id);
+        IQueryable<T> GetAllAsNoTracking();
     }
 }

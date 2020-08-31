@@ -1,8 +1,13 @@
 ﻿using AutoMapper;
+using Bayolu.Api.Utility;
 using Bayolu.AppService.Dto;
 using Bayolu.AppService.Service;
 using Bayolu.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bayolu.Api.Controllers
@@ -17,7 +22,7 @@ namespace Bayolu.Api.Controllers
             _userAppService = userAppService;
             _mapper = mapper;
         }
-        [HttpPost,]
+        [HttpPost, ModelValidation]
         public async Task<IActionResult> Createuser([FromBody] UserViewModel model)
         {
             try
@@ -26,9 +31,25 @@ namespace Bayolu.Api.Controllers
                 var result = await _userAppService.CreateUser(Request(vm));
                 return Ok(result);
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
-                throw;
+                return HandleException(e);
+            }
+        }
+
+        [HttpGet, Route("keyvalues")]
+        public async Task<IActionResult> GetUsers()
+        {
+            try
+            {
+                var result = await (_userAppService.GetUserQueryAsNoTracking()
+                    .Select(p => new KeyValuePair<Guid, string>(p.Id, p.FullName)))
+                    .ToListAsync();
+                return Ok(result);
+            }
+            catch (System.Exception e)
+            {
+                return HandleException(e);
             }
         }
     }

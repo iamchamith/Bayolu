@@ -1,95 +1,171 @@
 ﻿@page "/"
 @using Bayolu.ViewModel
-@inject HttpClient Http
-<div class="row">
+@using Bayolu.View.ServiceRepository
+@inject IJSRuntime JsRuntime;
+@inject Bayolu.View.ServiceRepository.UserServiceRepository _userServiceRepository
+@inject Bayolu.View.ServiceRepository.MasterServiceRepository _masterServiceRepository
+<EditForm Model="@model" OnValidSubmit="@Save">
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <h1>Add User</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div style="color:red;font-weight:bold">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+            </div>
+        </div>
+    </div>
 
-    <div class="col-6">
-        <div class="form-group">
-            <label for="exampleFormControlInput1">User Id</label>
-            <input type="text" class="form-control" id="userid" placeholder="User id" @bind="model.Id">
-        </div>
-        <div class="form-group">
-            <label for="exampleFormControlInput1">Full name</label>
-            <input type="text" class="form-control" id="@nameof(model.FullName)" placeholder="Full name" @bind="model.FullName">
-        </div>
-        <div class="form-group">
-            <label for="exampleFormControlInput1">Password</label>
-            <input type="password" class="form-control" id="@nameof(model.Password)" @bind="model.Password">
-        </div>
-        <div class="form-group">
-            <label for="exampleFormControlSelect1">Team</label>
-
-            <select class="form-control" id="@nameof(model.Team)">
-                @foreach (var item in teams)
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="@nameof(model.Id)">User Id</label>
+                <input type="text" class="form-control" id="userid" disabled="disabled" placeholder="User id" @bind="model.Id" maxlength="20">
+            </div>
+            <div class="form-group">
+                <label for="@nameof(model.FullName)">Full name</label>
+                <input type="text" class="form-control" id="@nameof(model.FullName)" placeholder="Full name" @bind="model.FullName" maxlength="20">
+            </div>
+            <div class="form-group">
+                <label for="@nameof(model.Password)">Password</label>
+                <input type="password" class="form-control" id="@nameof(model.Password)" @bind="model.Password" maxlength="20">
+            </div>
+            <div class="form-group">
+                <label for="@nameof(model.Team)">Team</label>
+                @if (teams == null)
                 {
-                    <option value="@item.Key">@item.Value</option>
+                    <label for="@nameof(model.Team)">Loading...</label>
                 }
-            </select>
+                else
+                {
+                    <select class="form-control" id="@nameof(model.Team)" @bind="model.Team">
+                        @foreach (var item in teams)
+                        {
+                            <option value="@item.Key">@item.Value</option>
+                        }
+                    </select>
+                }
+            </div>
+            <div class="form-group">
+                <label for="@nameof(model.StorageCapacity)">File Storage Capacity</label>
+                <input type="number" class="form-control" id="@nameof(model.StorageCapacity)" @bind="model.StorageCapacity" min="1" max="100">
+            </div>
         </div>
-        <div class="form-group">
-            <label for="exampleFormControlInput1">File Storage Capacity</label>
-            <input type="number" class="form-control" id="@nameof(model.StorageCapacity)" @bind="model.StorageCapacity">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="@nameof(model.Email)">Email address</label>
+                <input type="email" class="form-control" id="@nameof(model.Email)" @bind="model.Email" maxlength="20" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <label for="@nameof(model.Role)">Roles:</label>
+                @if (roles == null)
+                {
+                    <label for="@nameof(model.Role)">Loading...</label>
+                    <select class="form-control" id="@nameof(model.Role)">
+                    </select>
+                }
+                else
+                {
+                    <select class="form-control" id="@nameof(model.Role)" @bind="model.Role">
+                        @foreach (var item in roles)
+                        {
+                            <option value="@item.Key">@item.Value</option>
+                        }
+                    </select>
+                }
+            </div>
+            <div class="form-group">
+                <label for="@nameof(model.ConfirmPassword)">Confirm Password</label>
+                <input type="password" class="form-control" id="@nameof(model.ConfirmPassword)" @bind="model.ConfirmPassword" maxlength="20">
+            </div>
+            <div class="form-group">
+                <label for="@nameof(model.OriginalFolder)">Original Folder</label>
+                <input type="text" class="form-control" id="@nameof(model.OriginalFolder)" @bind="model.OriginalFolder" maxlength="20" placeholder="Original Folder">
+            </div>
+            <div class="form-group">
+                <label for="@nameof(model.Comment)">Comment</label>
+                <textarea class="form-control" id="@nameof(model.Comment)" rows="3" @bind="model.Comment" placeholder="Comments"></textarea>
+            </div>
         </div>
     </div>
-    <div class="col-6">
-        <form>
+    <div class="row">
+        <div class="col-6 col-md-6">
             <div class="form-group">
-                <label for="exampleFormControlInput1">Email address</label>
-                <input type="email" class="form-control" id="@nameof(model.Email)" @bind="model.Email">
+                <label for="@nameof(model.UserReviews)"><b>Mandatory Reviewers:</b></label><br />
+                <label for="@nameof(model.UserReviews)">Individuals:</label>
+                @if (review == null)
+                {
+                    <label for="@nameof(model.UserReviews)">Loading...</label>
+                    <select class="form-control" id="@nameof(model.UserReviews)">
+                    </select>
+                }
+                else
+                {
+                    <select class="form-control" id="@nameof(model.UserReviews)" @bind="model.UserReviews">
+                        @foreach (var item in review)
+                        {
+                            <option value="@item.Key">@item.Value</option>
+                        }
+                    </select>
+                }
             </div>
             <div class="form-group">
-                <label for="exampleFormControlSelect1">Roles:</label>
-                <select class="form-control" id="@nameof(model.Role)">
-                    @foreach (var item in roles)
-                    {
-                        <option value="@item.Key">@item.Value</option>
-                    }
-                </select>
+                <button class="btn btn-danger" @onclick="Cancel">Cancel</button>
+                <input type="submit" class="btn btn-success" value="Save" disabled="@requestpending"/>
             </div>
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Confirm Password</label>
-                <input type="password" class="form-control" id="@nameof(model.Password)" @bind="model.Password">
+            <div>
+                <b style="color:green">@message</b>
             </div>
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Original Folder</label>
-                <input type="text" class="form-control" id="@nameof(model.OriginalFolder)" @bind="model.OriginalFolder">
-            </div>
-            <div class="form-group">
-                <label for="exampleFormControlTextarea1">Comment</label>
-                <textarea class="form-control" id="@nameof(model.Comment)" rows="3" @bind="model.Comment"></textarea>
-            </div>
-            <div class="form-group">
-                @*<button class="btn btn-danger" @onclick="Cancel">Cancel</button>*@
-                <button class="btn btn-success" @onclick="Save">Save</button>
-            </div>
-        </form>
+        </div>
+        <div class="col-6 col-md-6"></div>
     </div>
-</div>
-
+</EditForm>
 @code{
 
-    List<KeyValuePair<int, string>> teams = new List<KeyValuePair<int, string>>() {
-
-        new KeyValuePair<int, string>(1,"Development"),
-        new KeyValuePair<int, string>(2,"Accounting"),
-        new KeyValuePair<int, string>(3,"Hr"),
-    };
-    List<KeyValuePair<int, string>> roles = new List<KeyValuePair<int, string>>() {
-
-        new KeyValuePair<int, string>(1,"Admin"),
-        new KeyValuePair<int, string>(2,"Cacher"),
-        new KeyValuePair<int, string>(3,"Accounter"),
-    };
-
+    string message;
+    bool requestpending = false;
+    List<KeyValuePair<int, string>> teams;
+    List<KeyValuePair<int, string>> roles;
+    List<KeyValuePair<Guid, string>> review;
     Bayolu.ViewModel.UserViewModel model = new Bayolu.ViewModel.UserViewModel();
-
-
     private async Task Save()
     {
-        await Http.PostAsJsonAsync("http://localhost:5001/v1/users", model);
+        try
+        {
+            requestpending = true;
+            var x = await _userServiceRepository.SubmitUser(model);
+            message = "Success created";
+            model.Id = Guid.NewGuid();
+            requestpending = false;
+        }
+        catch (BadException e)
+        {
+            message = e.Message;
+        }
+
     }
+
+    private void Cancel()
+    {
+
+        model = new Bayolu.ViewModel.UserViewModel();
+    }
+
     protected override async Task OnInitializedAsync()
     {
+        try
+        {
+            teams = (await _masterServiceRepository.GetTeams()).Item;
+            roles = (await _masterServiceRepository.GetRoles()).Item;
+            review = (await _userServiceRepository.GetUsers()).Item;
+        }
+        catch (BadException e)
+        {
+            message = e.Message;
+        }
 
     }
 }

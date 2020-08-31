@@ -1,5 +1,6 @@
 ﻿using Bayolu.SharedKernel;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static Bayolu.Domain.Enums;
@@ -22,14 +23,18 @@ namespace Bayolu.Domain
         public virtual string OriginalFolder { get; private set; }
         [Required, StringLength(1500)]
         public virtual string Comment { get; private set; }
+        public virtual Guid? UserReviews { get; private set; }
+
+        [ForeignKey(nameof(UserReviews))]
+        public virtual User UserReviewsBy { get; set; }
 
         public User()
         {
         }
-        public User(string name, string email, Role role, Team team, decimal capacity, string folder,
-            string comment)
+        public User(Guid id, string name, string email, Role role, Team team, decimal capacity, string folder,
+            string comment,Guid reviewBy) : this()
         {
-
+            Id = id;
             FullName = name;
             Email = email;
             Role = role;
@@ -37,12 +42,12 @@ namespace Bayolu.Domain
             StorageCapacity = capacity;
             OriginalFolder = folder;
             Comment = comment;
+            UserReviews = reviewBy;
         }
 
-        public User SetPassword(string password) {
-
-            //need to hash
-            Password = password;
+        public User SetPassword(string password)
+        {
+            Password = Cryptography.EncryptString(password);
             return this;
         }
     }

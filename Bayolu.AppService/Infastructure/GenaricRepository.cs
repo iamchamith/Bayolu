@@ -19,6 +19,10 @@ namespace Bayolu.AppService.Infastructure
         {
             return table.ToList();
         }
+        public IQueryable<T> GetAllAsNoTracking()
+        {
+            return table.AsNoTracking();
+        }
         public T GetById(object id)
         {
             return table.Find(id);

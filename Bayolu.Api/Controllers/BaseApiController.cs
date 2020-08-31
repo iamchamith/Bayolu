@@ -1,5 +1,6 @@
 ﻿using Bayolu.SharedKernel;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Bayolu.Api.Controllers
 {
@@ -14,6 +15,19 @@ namespace Bayolu.Api.Controllers
             // i just hardcode it. else we need to take from claims
             //example HttpContext.User.Claims[userid]
             return new Request<T>(item, 1);
+        }
+        [ApiExplorerSettings(IgnoreApi = true)]
+        protected IActionResult HandleException(Exception ex)
+        {
+
+            switch (ex)
+            {
+                case BayoluException _:
+                    return BadRequest(ex.Message);
+                default:
+                    // save on database
+                    return StatusCode(500, ex.Message);
+            }
         }
     }
 }

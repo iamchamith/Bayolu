@@ -4,6 +4,7 @@ using Bayolu.AppService.Infastructure;
 using Bayolu.Domain;
 using Bayolu.SharedKernel;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bayolu.AppService.Service
@@ -22,9 +23,10 @@ namespace Bayolu.AppService.Service
             try
             {
                 var dto = request.Item;
-                var @user = new User(dto.FullName, dto.Email, dto.Role, dto.Team, dto.StorageCapacity,
-                    dto.OriginalFolder, dto.Comment)
+                var @user = new User(dto.Id, dto.FullName, dto.Email, dto.Role, dto.Team, dto.StorageCapacity,
+                    dto.OriginalFolder, dto.Comment, dto.UserReviews)
                     .SetPassword(dto.Password);
+
                 _unitOfWork.UserGenaricRepository.Insert(@user);
                 await _unitOfWork.SaveAsync();
                 return _mapper.Map<UserDto>(user);
@@ -33,6 +35,11 @@ namespace Bayolu.AppService.Service
             {
                 throw;
             }
+        }
+
+        public IQueryable<User> GetUserQueryAsNoTracking() {
+
+            return _unitOfWork.UserGenaricRepository.GetAllAsNoTracking();
         }
     }
 }

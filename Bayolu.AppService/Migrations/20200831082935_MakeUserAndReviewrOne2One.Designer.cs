@@ -4,14 +4,16 @@ using Bayolu.AppService.Infastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bayolu.AppService.Migrations
 {
     [DbContext(typeof(BayolyDbContext))]
-    partial class BayolyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200831082935_MakeUserAndReviewrOne2One")]
+    partial class MakeUserAndReviewrOne2One
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
